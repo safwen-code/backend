@@ -6,7 +6,6 @@ const fs = require("fs");
 //add doc
 router.post("/add", multer, async (req, res, next) => {
   console.log(req.file);
-  console.log(req.body);
   const { titel, description, price, userId } = req.body;
   try {
     const thing = new Thing({
@@ -18,11 +17,11 @@ router.post("/add", multer, async (req, res, next) => {
         req.file.filename
       }`,
     });
-    console.log("thing", thing);
     await thing.save();
     return res.status(201).json({ thing });
+    next()
   } catch (error) {
-    return res.status(500).json({ errorF });
+    return res.status(500).json( error.message );
   }
 });
 
