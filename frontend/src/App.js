@@ -1,25 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Container } from "react-bootstrap";
+import "./App.css";
+import AddThing from "./things/AddThing";
+import DisplayThing from "./things/DisplayThing";
+import EditeThing from "./things/EditeThing";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
-function App() {
+const App = () => {
+  const [Thing, setThing] = useState([]);
+  const getThings = async () => {
+    try {
+      const thingDate = await axios.get("/thing/alldoc");
+      setThing(...Thing, thingDate.data.thing);
+      console.log(thingDate);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    getThings();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      <AddThing  />
+      <DisplayThing Thing={Thing} />
+      <EditeThing />
+    </Container>
   );
-}
+};
 
 export default App;

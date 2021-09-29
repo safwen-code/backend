@@ -1,0 +1,30 @@
+
+  const handelChange = (e) => {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case "price":
+        if (value === "" || value.match(/^\d{1,}(\.\d{0,2})?$/)) {
+          setforma((prevState) => ({
+            ...prevState,
+            [name]: value,
+          }));
+        }
+        break;
+      case "imageUrl ":
+        let file = e.target.files[0];
+        if (file) {
+          setforma((prevState) => ({
+            ...prevState,
+            imageUrl: file,
+          }));
+        }
+
+        break;
+      default:
+        setforma((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
+    }
+  };
